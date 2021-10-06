@@ -2,6 +2,11 @@ import mongoose from "mongoose";
 
 const { Schema, model } = mongoose;
 
+const commentSchema = new Schema({
+  text: { type: String, required: true },
+  user_name: { type: String, required: true }
+});
+
 const blogPostSchema = new Schema(
   {
     category: { type: String, required: true },
@@ -29,7 +34,8 @@ const blogPostSchema = new Schema(
         required: true
       }
     },
-    content: { type: String, required: true }
+    content: { type: String, required: true },
+    comments: [commentSchema]
   },
   {
     timestamps: true
