@@ -16,12 +16,14 @@ blogPostRouter.post("/", async (req, res, next) => {
 
 blogPostRouter.get("/", async (req, res, next) => {
   try {
-    console.log(parseInt(req.query.skip));
+    console.log(req.query);
     const blogPostsTotal = await BlogPostModel.countDocuments();
-    console.log(blogPostsTotal);
+    const skip = Number(req.query.skip);
+    console.log(skip);
     const blogPosts = await BlogPostModel.find()
-      .limit(req.query.limit || 5)
-      .skip(parseInt(req.query.skip));
+      .skip(skip)
+      .limit(req.query.limit || 5);
+    console.log(blogPosts);
     res.send(blogPosts);
   } catch (error) {
     next(error);
