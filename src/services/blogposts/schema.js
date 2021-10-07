@@ -28,17 +28,12 @@ const blogPostSchema = new Schema(
         required: true
       }
     },
-    author: {
-      type: Object,
-      name: {
-        type: String,
-        required: true
-      },
-      avatar: {
-        type: String,
-        required: true
+    authors: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Author"
       }
-    },
+    ],
     content: { type: String, required: true },
     comments: [commentSchema]
   },

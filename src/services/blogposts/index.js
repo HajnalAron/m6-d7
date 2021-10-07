@@ -22,7 +22,8 @@ blogPostRouter.get("/", async (req, res, next) => {
     console.log(skip);
     const blogPosts = await BlogPostModel.find()
       .skip(skip)
-      .limit(limit || 5);
+      .limit(limit || 5)
+      .populate("authors");
     res.send(blogPosts);
   } catch (error) {
     next(error);
