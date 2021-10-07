@@ -1,6 +1,7 @@
 import express from "express";
 import createHttpError from "http-errors";
 import AuthorModel from "./schema.js";
+import BlogPostModel from "../blogposts/schema.js";
 
 const authorsRouter = express.Router();
 
@@ -89,7 +90,10 @@ authorsRouter.route("/:authorId/blogposts").post(async (req, res, next) => {
       req.params.authorId,
       { $push: { blogposts: req.body } }
     );
-    res.send(targetAuthor);
+    const targetBlogPost = await BlogPostModel.findByIdAndUpdate(req.body._id, {
+      $push: { authors: { _id: req.params.authorId } }
+    });
+    res.send({ targetAuthor, targetBlogPost });
   } catch (error) {
     next(error);
   }
